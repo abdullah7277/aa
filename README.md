@@ -46,18 +46,23 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             margin-right: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns for shift boxes */
+            gap: 10px; /* Space between shift boxes */
         }
 
         .shift-selection-box {
-            margin-bottom: 10px;
             background-color: #f0f0f0;
             padding: 10px;
-            width: 80%; /* Reduced width */
+            height: 70px; /* Set height to match calendar cells */
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: background-color 0.3s ease;
             font-size: 0.9em;
+            display: flex; /* Use flexbox to center the content */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
         }
 
         .shift-selection-box:hover {
@@ -99,7 +104,6 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr); /* 7 columns */
-            grid-auto-flow: column-reverse; /* Reverse column flow for RTL */
             gap: 10px;
             justify-content: center;
             margin-top: 10px;
