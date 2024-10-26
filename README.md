@@ -46,27 +46,17 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             margin-right: 20px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 columns for shift boxes */
-            gap: 10px; /* Space between shift boxes */
+            display: flex;
+            flex-direction: column; /* Change to column */
+            gap: 10px; /* Space between elements */
         }
 
-        .shift-selection-box {
-            background-color: #f0f0f0;
+        select {
             padding: 10px;
-            height: 70px; /* Set height to match calendar cells */
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 0.9em;
-            display: flex; /* Use flexbox to center the content */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-        }
-
-        .shift-selection-box:hover {
-            background-color: #e0e0e0;
         }
 
         .calendar-navigation {
@@ -246,11 +236,6 @@
             .shift-selection-container {
                 width: 100%; /* Use full width for shift selection */
                 margin-right: 0; /* Remove right margin */
-                grid-template-columns: repeat(2, 1fr); /* Use 2 columns for shift boxes */
-            }
-
-            .shift-selection-box {
-                font-size: 1em; /* Increase font size for better readability */
             }
 
             .calendar-cell {
@@ -269,27 +254,16 @@
     <div class="container">
         <!-- Shift Selection Box -->
         <div class="shift-selection-container">
-            <div class="shift-selection-box" id="shift1">
-                <h3>الفئة الرابعة</h3>
-            </div>
-            <div class="shift-selection-box" id="shift2">
-                <h3>الفئة الثالثة</h3>
-            </div>
-            <div class="shift-selection-box" id="shift3">
-                <h3>الفئة الخامسة</h3>
-            </div>
-            <div class="shift-selection-box" id="shift4">
-                <h3>تزويد صباح ١</h3>
-            </div>
-            <div class="shift-selection-box" id="shift5">
-                <h3>تزويد صباح ٢</h3>
-            </div>
-            <div class="shift-selection-box" id="shift6">
-                <h3>تزويد ليل ١</h3> <!-- Added night shift -->
-            </div>
-            <div class="shift-selection-box" id="shift7">
-                <h3>تزويد ليل ٢</h3> <!-- Added night shift -->
-            </div>
+            <label for="employeeSelect">Select Shift:</label>
+            <select id="employeeSelect">
+                <option value="الفئة الرابعة">الفئة الرابعة</option>
+                <option value="الفئة الثالثة">الفئة الثالثة</option>
+                <option value="الفئة الخامسة">الفئة الخامسة</option>
+                <option value="تزويد صباح ١">تزويد صباح ١</option>
+                <option value="تزويد صباح ٢">تزويد صباح ٢</option>
+                <option value="تزويد ليل ١">تزويد ليل ١</option>
+                <option value="تزويد ليل ٢">تزويد ليل ٢</option>
+            </select>
         </div>
 
         <!-- Calendar and navigation -->
@@ -358,7 +332,7 @@
 
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
-        let currentEmployee = "الفئة الرابعة";
+        let currentEmployee = "الفئة الرابعة"; // Default category
 
         const today = new Date(); // Current day for red box
 
@@ -373,6 +347,7 @@
         const yearSelect = document.getElementById("yearSelect");
         const saveDateButton = document.getElementById("saveDateButton");
         const closeSpan = document.getElementsByClassName("close")[0];
+        const employeeSelect = document.getElementById("employeeSelect");
 
         // Populate yearSelect with options from 2010 to 2099
         for (let i = 2010; i <= 2099; i++) {
@@ -407,48 +382,9 @@
             monthYearModal.style.display = "none";
         });
 
-        // Shift buttons
-        const shift1 = document.getElementById("shift1");
-        const shift2 = document.getElementById("shift2");
-        const shift3 = document.getElementById("shift3");
-        const shift4 = document.getElementById("shift4");
-        const shift5 = document.getElementById("shift5");
-        const shift6 = document.getElementById("shift6"); // New shift
-        const shift7 = document.getElementById("shift7"); // New shift
-
-        // Event listeners for shift selection
-        shift1.addEventListener("click", function() {
-            currentEmployee = "الفئة الرابعة";
-            updateCalendar();
-        });
-
-        shift2.addEventListener("click", function() {
-            currentEmployee = "الفئة الثالثة";
-            updateCalendar();
-        });
-
-        shift3.addEventListener("click", function() {
-            currentEmployee = "الفئة الخامسة";
-            updateCalendar();
-        });
-
-        shift4.addEventListener("click", function() {
-            currentEmployee = "تزويد صباح ١";
-            updateCalendar();
-        });
-
-        shift5.addEventListener("click", function() {
-            currentEmployee = "تزويد صباح ٢";
-            updateCalendar();
-        });
-
-        shift6.addEventListener("click", function() {
-            currentEmployee = "تزويد ليل ١"; // New shift
-            updateCalendar();
-        });
-
-        shift7.addEventListener("click", function() {
-            currentEmployee = "تزويد ليل ٢"; // New shift
+        // Event listener for shift selection from dropdown
+        employeeSelect.addEventListener("change", function() {
+            currentEmployee = this.value; // Update the current employee based on selection
             updateCalendar();
         });
 
@@ -516,21 +452,21 @@
             if (currentEmployee === "الفئة الرابعة" || currentEmployee === "الفئة الثالثة" || currentEmployee === "الفئة الخامسة") {
                 const cycleDay = daysBetween % 10;
                 if (cycleDay === 0 || cycleDay === 1)
-                    return "AM "; // Morning shift with 
+                    return "AM "; // Morning shift
                 if (cycleDay === 2 || cycleDay === 3)
-                    return "PM "; // Afternoon shift with 
+                    return "PM "; // Afternoon shift
                 if (cycleDay === 4 || cycleDay === 5)
-                    return "Night "; // Night shift with 
+                    return "Night "; // Night shift
                 return "OFF";
             } else if (currentEmployee === "تزويد ليل ١" || currentEmployee === "تزويد ليل ٢") {
                 const cycleDay = daysBetween % 6; // 6-day cycle for تزويد ليل 1 and تزويد ليل 2
                 if (cycleDay === 0 || cycleDay === 1 || cycleDay === 2)
-                    return "Night "; // Night shift with 
+                    return "Night "; // Night shift
                 return "OFF";
             } else {
                 const cycleDay = daysBetween % 6; // 6-day cycle for تزويد صباح 1 and تزويد صباح 2
                 if (cycleDay === 0 || cycleDay === 1 || cycleDay === 2)
-                    return "AM "; // Morning shift with 
+                    return "AM "; // Morning shift
                 return "OFF";
             }
         }
