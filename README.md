@@ -231,6 +231,37 @@
             overflow-y: auto; /* Scroll if necessary */
         }
 
+        /* Media Queries for mobile responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column; /* Change direction to column on small devices */
+                align-items: center; /* Center elements */
+            }
+
+            .calendar-container {
+                width: 100%; /* Use full width for calendar */
+                margin-left: 0; /* Remove left margin */
+            }
+
+            .shift-selection-container {
+                width: 100%; /* Use full width for shift selection */
+                margin-right: 0; /* Remove right margin */
+                grid-template-columns: repeat(2, 1fr); /* Use 2 columns for shift boxes */
+            }
+
+            .shift-selection-box {
+                font-size: 1em; /* Increase font size for better readability */
+            }
+
+            .calendar-cell {
+                width: 50px; /* Reduce width for mobile */
+                height: 50px; /* Reduce height for mobile */
+            }
+
+            .day-cell {
+                font-size: 12px; /* Reduce font size for day cells */
+            }
+        }
     </style>
 </head>
 <body>
