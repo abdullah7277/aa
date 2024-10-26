@@ -516,21 +516,21 @@
             if (currentEmployee === "الفئة الرابعة" || currentEmployee === "الفئة الثالثة" || currentEmployee === "الفئة الخامسة") {
                 const cycleDay = daysBetween % 10;
                 if (cycleDay === 0 || cycleDay === 1)
-                    return "AM ⛅️"; // Morning shift with ⛅️
+                    return "AM "; // Morning shift with 
                 if (cycleDay === 2 || cycleDay === 3)
-                    return "PM ☀️"; // Afternoon shift with ☀️
+                    return "PM "; // Afternoon shift with 
                 if (cycleDay === 4 || cycleDay === 5)
-                    return "Night 🌙"; // Night shift with 🌙
+                    return "Night "; // Night shift with 
                 return "OFF";
             } else if (currentEmployee === "تزويد ليل ١" || currentEmployee === "تزويد ليل ٢") {
                 const cycleDay = daysBetween % 6; // 6-day cycle for تزويد ليل 1 and تزويد ليل 2
                 if (cycleDay === 0 || cycleDay === 1 || cycleDay === 2)
-                    return "Night 🌙"; // Night shift with 🌙
+                    return "Night "; // Night shift with 
                 return "OFF";
             } else {
                 const cycleDay = daysBetween % 6; // 6-day cycle for تزويد صباح 1 and تزويد صباح 2
                 if (cycleDay === 0 || cycleDay === 1 || cycleDay === 2)
-                    return "AM ⛅️"; // Morning shift with ⛅️
+                    return "AM "; // Morning shift with 
                 return "OFF";
             }
         }
